@@ -37,7 +37,7 @@ def pdb_to_structurelists(filelist):
     chid_list = []
     structid_list = []
 
-    N = 0
+    N = 0 
     for my_file in filelist:
         N += 1
         print("Reading:" + ' ' + my_file + "  (" + str(N) + " of " + str(len(filelist)) + ")")
@@ -123,6 +123,12 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
         elif (input_submenu == "3"):
             chid_list = remove_file_defined_chain_from_list(chid_list)
         elif (input_submenu == "4"):
+            print("    Choose gap percentage for residue renumbering",
+                  "    Input an integer number between 0 and 100",
+                  sep="\n")
+            user_gap = input('Gap percentage: ')
+            user_gap = int(user_gap)
+
             for chid in chid_list:
                 this_chainsseq_list = []
                 this_chainsseq_list_ids = [] #FAPA
@@ -188,7 +194,7 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                             #freq_tracker = 1
                             #gap_tracker = 0
                             #print(freq)
-                            if freq < 30:
+                            if freq < 100-user_gap: # CHANGE BACK to 30 (OR 25?) OR ADD OPTION FOR USER!!! 17 JAN 2025
                                 new_res_num.append(counter)
                                 counter += 1
                                 freq_tracker=freq
