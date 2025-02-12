@@ -123,10 +123,10 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
         elif (input_submenu == "3"):
             chid_list = remove_file_defined_chain_from_list(chid_list)
         elif (input_submenu == "4"):
-            print("    Choose gap percentage for residue renumbering",
-                  "    Input an integer number between 0 and 100",
+            print("    Choose occupancy threshold for residue renumbering",
+                  "    Input an integer number between 1 and 100",
                   sep="\n")
-            user_gap = input('Gap percentage: ')
+            user_gap = input('Occupancy threshold: ')
             user_gap = int(user_gap)
 
             for chid in chid_list:
@@ -194,7 +194,7 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                             #freq_tracker = 1
                             #gap_tracker = 0
                             #print(freq)
-                            if freq < 100-user_gap: # CHANGE BACK to 30 (OR 25?) OR ADD OPTION FOR USER!!! 17 JAN 2025
+                            if freq < 100-user_gap: # accepted gap percentage based on user defined occupancy threshold
                                 new_res_num.append(counter)
                                 counter += 1
                                 freq_tracker=freq
