@@ -34,6 +34,11 @@ This step is also important because it lists all the entities that were found in
 
 Same as Step 3.1, but in our example, we give the same MOL ID to different entities. You may want to do this for example, if you want to give the same MOL ID to all ligands, or water molecules. Doing this will trigger a concatenation menu, which we show how to use.
 
+### [Step 3.3. Assign MOLID to the entities found in the CIF files, version 3](https://github.com/fatipardo/PDBClean-0.0.2/blob/master/Notebooks/Step3.3AssignMolIDToEntitiesFoundInCIFfiles3.ipynb)
+
+In this notebook we show how to perform concatenations and conversions by using a conversion file (useful when a structure contains many entities). 
+We also show an option that allows users to keep a record of the changes introduced in this step (track old chain names, new chain names, entity names and file names).
+
 ### [Step 4. Chain ID standardization](https://github.com/fatipardo/PDBClean-0.0.2/blob/master/Notebooks/Step4.ChainIDStandardization.ipynb)
 
 Step 4 allows us to name each entity with whatever name we want. Step 4 makes sure that the chains that are the same (we do sequence alignment to determine similarity) in different CIF files, have a consistent name. Sometimes entities/chains are mislabeled in deposited structures, this step is recommended to identify any such cases. This step can also be used to identify any possible outliers, by seeing how all chains score compared to our reference. 
