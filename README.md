@@ -25,12 +25,12 @@ Download all structures that match the name and sequence of your molecule of int
 
 A CIF file may contain multiple biological assemblies within one asymmetric unit. In this step we separate these biological assemblies, and create one CIF file for each one. We also reduce the number of data blocks included in the CIF file.
 
-### [Step 3.1. Assign MOLID to the entities found in the CIF files, version 1](https://github.com/fatipardo/PDBClean-0.0.2/blob/master/Notebooks/Step3.1.AssignMolIDToEntitiesFoindInCIFfiles1.ipynb)
+### [Step 3.1. Assign MOLID to the entities found in the CIF files, version 1](https://github.com/fatipardo/PDBClean-0.0.2/blob/master/Notebooks/Step3.1.AssignMolIDToEntitiesFoundInCIFfiles1.ipynb)
 
 The script goes over all the CIF files and collects all entities. The user can decide what Mol ID to assign them. In this example, we show the case in which we give a different ID to each entity found.
 This step is also important because it lists all the entities that were found in your ensemble, so it allows you to identify if there is a structure that doesn't belong. We show an example of this in this notebook.
 
-### [Step 3.2. Assign MOLID to the entities found in the CIF files, version 2](https://github.com/fatipardo/PDBClean-0.0.2/blob/master/Notebooks/Step3.2.AssignMolIDToEntitiesFoindInCIFfiles2.ipynb)
+### [Step 3.2. Assign MOLID to the entities found in the CIF files, version 2](https://github.com/fatipardo/PDBClean-0.0.2/blob/master/Notebooks/Step3.2.AssignMolIDToEntitiesFoundInCIFfiles2.ipynb)
 
 Same as Step 3.1, but in our example, we give the same MOL ID to different entities. You may want to do this for example, if you want to give the same MOL ID to all ligands, or water molecules. Doing this will trigger a concatenation menu, which we show how to use.
 
