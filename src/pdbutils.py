@@ -138,7 +138,8 @@ def retrieve_seqfile(seqfile=None):
     seqfile : str
         The path to the downloaded sequence file.
     """
-    sequrl='ftp://ftp.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt'
+    #sequrl='ftp://ftp.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt' FAPA CHANGED ADDRESS FEB 2025
+    sequrl='https://files.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt'
     if seqfile is None:
         seqfile='seqfile.txt'
     download_from_url(sequrl, seqfile)
