@@ -17,6 +17,7 @@ from PDBClean.alignmentutils import *
 from PDBClean.listutils import *
 from matching.games import HospitalResident
 import json
+sys.setrecursionlimit(10000)
 
 ####################
 # INITIALIZE STEPS #
@@ -368,6 +369,10 @@ def align_to_std_seq_and_save_to_disk(Structure_Sequences, Standard_Sequences, s
                 for h in list(test_list_list_sortkey2.keys()):
                     capacities[h] = 1
 
+                print('Now printing test_list_list_sortkey2:')
+                print(test_list_list_sortkey2)
+                print('Now printing test_list_list_T_sortkey:')
+                print(test_list_list_T_sortkey)
                 game = HospitalResident.create_from_dictionaries(test_list_list_sortkey2, test_list_list_T_sortkey, capacities)
                 solved_game = game.solve()
 
