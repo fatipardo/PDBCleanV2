@@ -17,6 +17,7 @@ from PDBClean.alignmentutils import *
 from PDBClean.listutils import *
 from matching.games import HospitalResident
 import json
+sys.setrecursionlimit(10000)
 
 ####################
 # INITIALIZE STEPS #
