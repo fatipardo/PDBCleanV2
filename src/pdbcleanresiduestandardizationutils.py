@@ -37,7 +37,7 @@ def pdb_to_structurelists(filelist):
     chid_list = []
     structid_list = []
 
-    N = 0
+    N = 0 
     for my_file in filelist:
         N += 1
         print("Reading:" + ' ' + my_file + "  (" + str(N) + " of " + str(len(filelist)) + ")")
@@ -123,6 +123,12 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
         elif (input_submenu == "3"):
             chid_list = remove_file_defined_chain_from_list(chid_list)
         elif (input_submenu == "4"):
+            print("    Choose occupancy threshold for residue renumbering",
+                  "    Input an integer number between 1 and 100",
+                  sep="\n")
+            user_gap = input('Occupancy threshold: ')
+            user_gap = int(user_gap)
+
             for chid in chid_list:
                 this_chainsseq_list = []
                 this_chainsseq_list_ids = [] #FAPA
@@ -188,7 +194,7 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                             #freq_tracker = 1
                             #gap_tracker = 0
                             #print(freq)
-                            if freq < 30:
+                            if freq < 100-user_gap: # accepted gap percentage based on user defined occupancy threshold
                                 new_res_num.append(counter)
                                 counter += 1
                                 freq_tracker=freq
@@ -400,7 +406,8 @@ def conversiontemplate_to_pdb_FAPA(filelist, Structure_ConversionTemplate, targe
                         # Chains outside map should not exist but just in case
                         #line_split = line.strip()
                         line_split = line.split()
-                        new_line_resnum=int(line_split[8])
+                        #print(line_split[8])
+                        #new_line_resnum=int(line_split[8])
 
                         #if new_line_resnum == start_line_resnum:
 
@@ -419,6 +426,8 @@ def conversiontemplate_to_pdb_FAPA(filelist, Structure_ConversionTemplate, targe
                         #key = line_split[6] + "_" + str(resnum)  # FAPA: WE WANT CHAINID_RESID TO BE THE KEY
 
                         #print(len(line_split))
+
+
 
                         if key in conversion_template:
                             #print(key, conversion_template[key])
@@ -443,10 +452,40 @@ def conversiontemplate_to_pdb_FAPA(filelist, Structure_ConversionTemplate, targe
                                               line_split[16] + " " + line_split[17] + " " + "\n"
                                     newciffile.write(newline)
                             else:
-                                newline = line_split[0] + " " + line_split[1] + " " + line_split[2] + " " + line_split[3] + " " + line_split[4] + " " + line_split[5] + " " + line_split[6] + " " + line_split[7] + " " + str(conversion_template[key]) + " " + "?" + " " + line_split[10] + " " + line_split[11] + " " + line_split[12] + " " + line_split[13] + " " + line_split[14] + " " + str(conversion_template[key]) + " " + line_split[16] + " " + line_split[17] + " " + line_split[18] + " " + line_split[19] + "\n"
-                                newciffile.write(newline)
+                                if len(str(conversion_template[key]).split()) < 2:
+                                    #print(conversion_template[key])
+                                    newline = line_split[0] + " " + line_split[1] + " " + line_split[2] + " " + line_split[3] + " " + line_split[4] + " " + line_split[5] + " " + line_split[6] + " " + \
+                                              line_split[7] + " " + str(conversion_template[key]) + " " + "?" + " " + line_split[10] + " " + line_split[11] + " " + line_split[12] + " " + line_split[13] + \
+                                              " " + line_split[14] + " " + str(conversion_template[key]) + " " + line_split[16] + " " + line_split[17] + " " + line_split[18] + " " + line_split[19] + "\n"
+                                    newciffile.write(newline)
+                                else:
+                                    newline = line_split[0] + " " + line_split[1] + " " + line_split[2] + " " + \
+                                              line_split[3] + " " + line_split[4] + " " + line_split[5] + " " + \
+                                              line_split[6] + " " + \
+                                              line_split[7] + " " + str(conversion_template[key].split()[0]) + " " + \
+                                              str(conversion_template[key].split()[1]) + " " + \
+                                              line_split[10] + " " + line_split[11] + " " + line_split[12] + " " + \
+                                              line_split[13] + \
+                                              " " + line_split[14] + " " + str(conversion_template[key].split()[0]) + " " + \
+                                              line_split[16] + " " + line_split[17] + " " + line_split[18] + " " + line_split[19] + "\n"
+                                    newciffile.write(newline)
                         else:
-                            newciffile.write(line)
+                            if len(line_split) == 18:
+                                newciffile.write(line)
+                            else:
+                                if line_split[8] == ".":
+                                    newline = line_split[0] + " " + line_split[1] + " " + line_split[2] + " " + \
+                                              line_split[3] + " " + line_split[4] + " " + line_split[5] + " " + \
+                                              line_split[6] + " " + \
+                                              line_split[7] + " " + line_split[15] + " " + \
+                                              line_split[9] + " " + \
+                                              line_split[10] + " " + line_split[11] + " " + line_split[12] + " " + \
+                                              line_split[13] + \
+                                              " " + line_split[14] + " " + line_split[15] + " " + \
+                                              line_split[16] + " " + line_split[17] + " " + line_split[18] + " "+ line_split[19] +"\n"
+                                    newciffile.write(newline)
+                                else:
+                                    newciffile.write(line)
                     else:
                         newciffile.write(line)
 

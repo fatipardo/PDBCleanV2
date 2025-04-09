@@ -32,8 +32,8 @@ input_menu_check = ""
 
 while(input_menu != "QUIT"):
     print("PDBClean Residue Number Standardization Menu",
-          "    Select one of the following options to proceed:",
-          "    1) Perform multiple alignments to identify residues",
+          "    After checking all structures are loaded, select option 1 to proceed:",
+          "    1) Proceed to multiple alignment menu",
           sep="\n")
     if(input_menu_check == "1"):
         print("    2) View conversion template")
@@ -49,7 +49,9 @@ while(input_menu != "QUIT"):
                                                                                                                                    input_menu_check)
     elif (input_menu == "2" and input_menu_check == "1"):
         resstd.show_conversiontemplate(Structure_ConversionTemplate)
-    elif (input_menu == "3" and input_menu_check == "1"):
-        resstd.conversiontemplate_to_pdb(filelist, Structure_ConversionTemplate, target_dir=target_dir)
+    #elif (input_menu == "3" and input_menu_check == "1"):
+    #    resstd.conversiontemplate_to_pdb(filelist, Structure_ConversionTemplate, target_dir=target_dir)
     elif (input_menu == "4" and input_menu_check == "1"):
         resstd.write_and_show_conversiontemplate(Structure_ConversionTemplate,target_dir,True)
+    elif (input_menu == "3" and input_menu_check == "1"):
+        resstd.conversiontemplate_to_pdb_FAPA(filelist, Structure_ConversionTemplate, target_dir=target_dir)
