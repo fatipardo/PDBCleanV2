@@ -162,7 +162,8 @@ def AlignSequences_v2(sequence_vec, file_name, this_chainsseq_list_ids):
             newfafile.write("> Seq " + str(this_chainsseq_list_ids[i]) + "\n")
             newfafile.write(seq + "\n")
             i += 1
-    command = "muscle -align "+file_name+".fa -output "+file_name+".fasta"
+    #command = "muscle -align "+file_name+".fa -output "+file_name+".fasta"
+    command = "muscle -super5 "+file_name+".fa -output "+file_name+".fasta" #FAPA 26AUG2025
 
     process = os.popen(command)
 
@@ -240,7 +241,8 @@ def AlignSequences_v3(sequence_vec, file_name, this_chainsseq_list_ids):
                 newfafile.write(seq + "\n")
                 i += 1
 
-        command = "muscle -align "+file_name+".fa -output "+file_name+".fasta"
+        #command = "muscle -align "+file_name+".fa -output "+file_name+".fasta"
+        command = "muscle -super5 "+file_name+".fa -output "+file_name+".fasta" # FAPA 26AUG2025
         process = os.popen(command)
         process
 
@@ -321,7 +323,8 @@ def AlignSequences_v4(sequence_vec, file_name, this_chainsseq_list_ids):
                 newfafile.write(seq + "\n")
                 i += 1
 
-        command = "muscle -align "+file_name+".fa -output "+file_name+".fasta"
+        #command = "muscle -align "+file_name+".fa -output "+file_name+".fasta"
+        command = "muscle -super5 "+file_name+".fa -output "+file_name+".fasta" # FAPA 26AUG2025
         process = os.popen(command)
         process
 
