@@ -112,7 +112,8 @@ def simplify_cif(oldfile, newfile, pdbformat):
         newciffile.write("#\n")
 
         # Changes the list format to str
-        L = str(mmcif_dict['_entry.id'])
+        # Update 02/20/2026 : Paulina Removed brackets which would surround ' _entry.id'
+        L = str(mmcif_dict['_entry.id']).replace("]","").replace("[","")
         entryid = '_entry.id   ' + L
         newciffile.write(entryid + "\n")
 
