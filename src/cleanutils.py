@@ -179,16 +179,21 @@ def simplify_cif(oldfile, newfile, pdbformat):
             newciffile.write("'" + L1 + "' " + L2 + " " + "\n")
 
         # Writes Entity category
+        # PAULINA 05/05/26
         newciffile.write("#" + "\n")
         newciffile.write("loop_" + "\n")
         newciffile.write("_entity.id" + "\n")
+        newciffile.write("_entity.type" + "\n")
+        newciffile.write("_entity.src_method" + "\n")
         newciffile.write("_entity.pdbx_description" + "\n")
         L1 = mmcif_dict['_entity.id']
-        L2 = mmcif_dict['_entity.pdbx_description']
+        L2 = mmcif_dict['_entity.type']
+        L3 = mmcif_dict['_entity.src_method']
+        L4 = mmcif_dict['_entity.pdbx_description']
         for i in range(len(L1)):
-            L2[i] = L2[i].upper()
-            L2[i] = L2[i].replace(":", "")
-            newciffile.write(L1[i] + " '" + L2[i].replace("'", "") + "'\n")
+            L4[i] = L4[i].upper()
+            L4[i] = L4[i].replace(":", "")
+            newciffile.write(L1[i] + " " + L2[i] + " " + L3[i] + " '" + L4[i].replace("'", "") + "'\n")
 
         # Writes the coordinate portion of the file
         newciffile.write("#" + "\n")
