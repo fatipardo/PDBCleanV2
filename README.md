@@ -68,17 +68,14 @@ This notebook can be run after doing step 0. It creates plots that summarize imp
 ## Installation
 
 We recommend installing PDBClean inside a virtual environment. We provide an `environment.yml` with the libraries you will need. 
-We have tested the installation on MacOS with intel processors.
+We have tested the installation on MacOS and Ubuntu 24.04.1 LTS.
 Ensuring you have the pre-requisites will facilitate the installation process!
 
 ### Pre-requisites
 
-- Xcode including Command Line tools 
+- Xcode including Command Line tools (for MacOS)
 - Anaconda
 - Create SSH Key and link it to your GitHub account
-- Jupyter notebook
-- If running in a Mac with M1/M2/M3 chips, install Muscle v.5.1.0 with homebrew, using the following command:
- > `brew install brewsci/bio/muscle`
 
 ### Installation steps
 
