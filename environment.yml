@@ -1,0 +1,24 @@
+name: PDBCleanV2
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - python=3.10.5
+  - biopython=1.83
+  - cvxopt=1.3.0
+  - cython=0.29.30
+  - jupyter=1.0.0
+  - matplotlib=3.5.2
+  - mmseqs2=14.7e284
+  - muscle=5.1
+  - numpy=1.23.1
+  - pandas=2.0.0
+  - qtconsole=5.3.1
+  - scipy=1.8.1
+  - seaborn=0.12.2
+  - statsmodels=0.14.0
+  - wheel=0.37.1
+  - pip=22.1.2
+  - pip:
+      - matching==1.4
+      - pyqt5-sip==12.11.0
