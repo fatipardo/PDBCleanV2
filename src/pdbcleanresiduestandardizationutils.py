@@ -3,6 +3,8 @@ from __future__ import division
 from Bio.PDB.MMCIFParser import FastMMCIFParser
 from PDBClean.alignmentutils import *
 from PDBClean.listutils import *
+import string
+
 #
 
 ####################
@@ -104,9 +106,39 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
     check : str
         Updated string representing the state of the main menu, set to '1' to indicate a state change.
     """
+
+    def get_gap_letter(n):
+        """
+            Convert a 0-based index into a spreadsheet-style alphabet label.
+
+            Cycles through all single uppercase letters (A-Z) and lowercase letters
+            (a-z) before moving into multi-letter combinations (AA, AB, ..., zz, AAA...).
+
+            Parameters:
+            -----------
+                n : int
+                    The 0-based index to convert.
+
+            Returns:
+            --------
+                label : str
+                    The corresponding alphabetic label.
+            """
+        alphabet = string.ascii_uppercase + string.ascii_lowercase
+
+        label = ""
+        n += 1
+        while n > 0:
+            n, remainder = divmod(n - 1, 52)
+            label = alphabet[remainder] + label
+
+        return label
+
     Structure_Sequences_Aligned = {}
     Structure_ConversionTemplate = {}
     Structure_Sequences_GAPS = {}
+    big_structures_warning = set()
+
     input_submenu = ""
     while(input_submenu != "QUIT"):
         print("    Perform multiple alignments to identify residues",
@@ -147,6 +179,7 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                     key = str(structid_list[I]) + "_" + chid
                     if key in Structure_Sequences:
                         #Structure_Sequences_Aligned[key] = this_chainsseq_aligned_list[i]
+                        
                         Structure_Sequences_Aligned[key] = this_chainsseq_aligned_list_map[str(structid_list[I])]
                         Structure_Sequences_GAPS[key] = this_chainseq_gap_percentages #FAPA
                         i += 1
@@ -189,12 +222,13 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                         new_res_num=[]
                         freq_tracker=1
                         gap_tracker=0
-                        gap_letter=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-                        for freq in gaps:
+                        for freq in gaps: # accepted gap percentage based on user defined occupancy threshold
+
+                        # Changing the functionality of gap_letter
                             #freq_tracker = 1
                             #gap_tracker = 0
                             #print(freq)
-                            if freq < 100-user_gap: # accepted gap percentage based on user defined occupancy threshold
+                            if freq < 100-user_gap:
                                 new_res_num.append(counter)
                                 counter += 1
                                 freq_tracker=freq
@@ -203,7 +237,10 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                             else:
                                 #print(gap_tracker)
                                 #new_res_num.append(str(counter)+"_"+str(gap_tracker))
-                                new_res_num.append(str(counter-1) +" "+str(gap_letter[gap_tracker]))
+                                new_res_num.append(str(counter-1) +" "+str(get_gap_letter(gap_tracker)))
+
+                                if gap_tracker == 52:
+                                    big_structures_warning.add(structid_list[I].split("/")[-1])
                                 gap_tracker+=1
                                 freq_tracker=freq
 
@@ -266,6 +303,12 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
 
             check = "1"
             input_submenu = "QUIT"
+
+    if len(big_structures_warning) > 0:
+        print(f"\nWARNING: The following structures were affected by large gaps in most of the MSA (>62 positions), "
+              f"resulting in residue renumbering that requires two-character alternate identifiers. This may lead "
+              f"to problems when opening the structure with molecular visualization software. {big_structures_warning}\n")
+        
     return Structure_Sequences_Aligned, Structure_ConversionTemplate, chid_list, check
 
 def show_conversiontemplate(Structure_ConversionTemplate):
