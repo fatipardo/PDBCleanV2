@@ -109,20 +109,16 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
 
     def get_gap_letter(n):
         """
-        Convert a 0-based index into a spreadsheet-style alphabet label.
+            Convert a 0-based index into a spreadsheet-style alphabet label.
 
-        Cycles through all single uppercase letters (A-Z) and lowercase letters
-        (a-z) before moving into multi-letter combinations (AA, AB, ..., zz, AAA...).
+            Cycles through all single uppercase letters (A-Z) and lowercase letters
+            (a-z) before moving into multi-letter combinations (AA, AB, ..., zz, AAA...).
 
             Parameters:
-            -----------
-            n : int
-                The 0-based index to convert.
+                n (int): The 0-based index to convert.
 
             Returns:
-            --------
-            label : str
-                The corresponding alphabetic label.
+                str: The corresponding alphabetic label.
             """
         alphabet = string.ascii_uppercase + string.ascii_lowercase
 
@@ -137,7 +133,7 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
     Structure_Sequences_Aligned = {}
     Structure_ConversionTemplate = {}
     Structure_Sequences_GAPS = {}
-    big_structures_warning = set()
+    big_structures_warning = {}
 
     input_submenu = ""
     while(input_submenu != "QUIT"):
@@ -177,6 +173,7 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                 i = 0
                 for I in range(len(structid_list)):
                     key = str(structid_list[I]) + "_" + chid
+
                     if key in Structure_Sequences:
                         #Structure_Sequences_Aligned[key] = this_chainsseq_aligned_list[i]
                         
@@ -240,7 +237,8 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                                 new_res_num.append(str(counter-1) +" "+str(get_gap_letter(gap_tracker)))
 
                                 if gap_tracker == 52:
-                                    big_structures_warning.add(structid_list[I].split("/")[-1])
+                                    structure = (structid_list[I].split("/")[-1])
+                                    big_structures_warning.setdefault(structure, []).append(chain)
                                 gap_tracker+=1
                                 freq_tracker=freq
 
@@ -305,10 +303,17 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
             input_submenu = "QUIT"
 
     if len(big_structures_warning) > 0:
-        print(f"\nWARNING: The following structures were affected by large gaps in most of the MSA (>62 positions), "
+        print(f"\nWARNING: Some structures were affected by large gaps in most of the MSA (>62 positions), "
               f"resulting in residue renumbering that requires two-character alternate identifiers. This may lead "
-              f"to problems when opening the structure with molecular visualization software. {big_structures_warning}\n")
-        
+              f"to problems when opening the structure with molecular visualization software. These structures "
+              f"will be saved in residue_warning_structures.txt in the format 'structure:chain'\n")
+
+        with open(f"residue_warning_structures.txt", "w+") as f:
+            f.write("structure:chain\n")
+            for structure in big_structures_warning:
+                for chain in big_structures_warning[structure]:
+                    f.write(f"{structure}:{chain}\n")
+                    
     return Structure_Sequences_Aligned, Structure_ConversionTemplate, chid_list, check
 
 def show_conversiontemplate(Structure_ConversionTemplate):
