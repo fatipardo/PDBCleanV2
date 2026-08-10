@@ -306,9 +306,9 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
         print(f"\nWARNING: Some structures were affected by large gaps in most of the MSA (>62 positions), "
               f"resulting in residue renumbering that requires two-character alternate identifiers. This may lead "
               f"to problems when opening the structure with molecular visualization software. These structures "
-              f"will be saved in residue_warning_structures.txt in the format 'structure:chain'\n")
+              f"will be saved in residue_warning_structures.csv in the format 'structure:chain'\n")
 
-        with open(f"residue_warning_structures.txt", "w+") as f:
+        with open("residue_warning_structures.csv", "w") as f:
             f.write("structure:chain\n")
             for structure in big_structures_warning:
                 for chain in big_structures_warning[structure]:
