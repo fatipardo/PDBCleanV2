@@ -109,23 +109,24 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
 
     def get_gap_letter(n):
         """
-            Convert a 0-based index into a spreadsheet-style alphabet label.
+            Convert a 0-based index into a spreadsheet-style alphanumeric label.
 
-            Cycles through all single uppercase letters (A-Z) and lowercase letters
-            (a-z) before moving into multi-letter combinations (AA, AB, ..., zz, AAA...).
+            Cycles through all single uppercase letters (A-Z), lowercase letters (a-z), and digits (0-9)
+            before moving into multi-letter combinations (AA, AB, ..., 99, AAA...).
 
             Parameters:
                 n (int): The 0-based index to convert.
 
             Returns:
-                str: The corresponding alphabetic label.
+                str: The corresponding label.
             """
-        alphabet = string.ascii_uppercase + string.ascii_lowercase
+        alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits
+        base = len(alphabet)
 
         label = ""
         n += 1
         while n > 0:
-            n, remainder = divmod(n - 1, 52)
+            n, remainder = divmod(n - 1, base)
             label = alphabet[remainder] + label
 
         return label
