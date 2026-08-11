@@ -237,7 +237,7 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                                 #new_res_num.append(str(counter)+"_"+str(gap_tracker))
                                 new_res_num.append(str(counter-1) +" "+str(get_gap_letter(gap_tracker)))
 
-                                if gap_tracker == 52:
+                                if gap_tracker == 62:
                                     structure = (structid_list[I].split("/")[-1])
                                     big_structures_warning.setdefault(structure, []).append(chain)
                                 gap_tracker+=1
