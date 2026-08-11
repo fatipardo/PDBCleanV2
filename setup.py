@@ -26,16 +26,16 @@ __author__   = "Levitt Lab, Stanford"
 __version__  = VERSION
 
 metadata = {
-    'name': 'PDBClean',
+    'name': 'CIFcurator',
     'version': VERSION,
     'author': __author__,
     'author_email': 'fpardo@stanford.edu',
     'license': 'MIT',
-    'url': 'https://github.com/fatipardo/PDBClean-0.0.2',
-    'download_url': 'https://github.com/fatipardo/PDBClean-0.0.2',
+    'url': 'https://github.com/fatipardo/CIFcurator',
+    'download_url': 'https://github.com/fatipardo/CIFcurator',
     'platforms': ['Linux', 'OSX'],
     'description': "PDB curation tools",
-    'long_description': """PDBClean offers curation tools for structural ensemble deposited in the Protein Data Bank."""}
+    'long_description': """CIFcurator offers curation tools for structural ensemble deposited in the Protein Data Bank."""}
 
 # ------------------------------------------------------------------------------
 # HELPER FUNCTIONS -- path finding, git, python version, readthedocs
@@ -106,8 +106,8 @@ def git_version():
 # -----------------------------------------------------------------------------
 # INSTALL
 
-metadata['packages']     = ['PDBClean']
-metadata['package_dir']  = {'PDBClean' :         'src'}
+metadata['packages']     = ['CIFcurator']
+metadata['package_dir']  = {'CIFcurator' :         'src'}
 metadata['ext_modules']  = []
 metadata['scripts']      = [s for s in glob('scripts/*') if not s.endswith('__.py')]
 #metadata['data_files']   = [('reference', glob('./reference/*'))]
