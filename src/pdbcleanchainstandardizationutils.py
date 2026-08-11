@@ -13,8 +13,8 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Align import MultipleSeqAlignment
 from Bio import pairwise2
-from PDBClean.alignmentutils import *
-from PDBClean.listutils import *
+from CIFcurator.alignmentutils import *
+from CIFcurator.listutils import *
 from matching.games import HospitalResident
 import json
 sys.setrecursionlimit(10000)
