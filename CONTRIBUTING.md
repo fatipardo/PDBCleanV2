@@ -1,4 +1,4 @@
-# How to contribute to PDBCleanV2
+# How to contribute to CIFcurator
 
 Hello! Thank you for helping us improve our project!
 
@@ -6,13 +6,13 @@ Please read and follow our guidelines to ensure a positive experience for contri
 
 ## :page_with_curl: Code of Conduct
 
-Before you start, review our [Code of Conduct](https://github.com/fatipardo/PDBClean-0.0.2/blob/master/CODE_OF_CONDUCT.md). Bad behavior will not be tolerated. 
+Before you start, review our [Code of Conduct](https://github.com/fatipardo/CIFcurator/blob/master/CODE_OF_CONDUCT.md). Bad behavior will not be tolerated. 
 
 ## :incoming_envelope: Opening an Issue
 
-Sign in to your GitHub account and create a **New Issue** in [GitHub issues](https://github.com/fatipardo/PDBClean-0.0.2/issues)
+Sign in to your GitHub account and create a **New Issue** in [GitHub issues](https://github.com/fatipardo/CIFcurator/issues)
 
-Before you create a new entry, please check if the issue has already been reported in [GitHub](https://github.com/fatipardo/PDBClean-0.0.2/issues). And review our [documentation](https://github.com/fatipardo/PDBClean-0.0.2/tree/master/Notebooks). 
+Before you create a new entry, please check if the issue has already been reported in [GitHub](https://github.com/fatipardo/CIFcurator/issues). And review our [documentation](https://github.com/fatipardo/CIFcurator/tree/master/Notebooks). 
 
 Make sure to select an appropriate label for the issue before you submit it (e.g. bug, enhancement, etc).
 
