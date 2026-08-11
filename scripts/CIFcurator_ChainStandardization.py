@@ -33,7 +33,7 @@ input_menu = ""
 input_menu_check_1 = ""
 
 while(input_menu != "QUIT"):
-    print("PDBClean ChainID Standardization Menu",
+    print("CIFcurator ChainID Standardization Menu",
           "    Select one of the following options to proceed:",
           "    1) Select Standard Sequences from a chosen input structure",
           "    2) Generate Standard Sequences based on all the input structures",
