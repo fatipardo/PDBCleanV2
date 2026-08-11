@@ -1,4 +1,4 @@
-name: PDBCleanV2
+name: CIFcurator
 channels:
   - bioconda
   - conda-forge
