@@ -31,7 +31,7 @@ input_menu = ""
 input_menu_check = ""
 
 while(input_menu != "QUIT"):
-    print("PDBClean Residue Number Standardization Menu",
+    print("CIFcurator Residue Number Standardization Menu",
           "    After checking all structures are loaded, select option 1 to proceed:",
           "    1) Proceed to multiple alignment menu",
           sep="\n")
