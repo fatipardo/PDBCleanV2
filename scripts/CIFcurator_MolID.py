@@ -56,7 +56,7 @@ while(input_menu != "QUIT"):
                  by selection option 7 or, continue to edit your conversion
                  template through this menu
               """)
-    print("""PDBClean MolID Conversion Build Menu
+    print("""CIFcurator MolID Conversion Build Menu
              Select one of the following options to proceed:
              1) Show full conversion
              2) Show only unassigned conversions
@@ -157,7 +157,7 @@ if (concat_menu == "START"):
                      by selection option 6 or, continue to edit your conversion
                      template through this menu
                   """)
-        print("""PDBClean Concatenations Menu
+        print("""CIFcurator Concatenations Menu
                  -------------------------------
                  This menu appeared because you have assigned the same chain name to two (or more) entities.
                  Note that this will concatenate the entities. So you need to either re-assign chain names,
