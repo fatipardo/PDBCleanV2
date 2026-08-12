@@ -4,7 +4,7 @@
 from __future__ import print_function
 from __future__ import division
 import sys, glob
-from CIFcurator import pdbcleanresiduestandardizationutils as resstd
+from CIFcurator import cifcuratorresiduestandardizationutils as resstd
 
 ########################
 # READ INPUT ARGUMENTS #
