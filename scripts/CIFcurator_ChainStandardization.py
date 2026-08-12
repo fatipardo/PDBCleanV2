@@ -4,7 +4,7 @@
 from __future__ import print_function
 from __future__ import division
 import sys, glob
-from CIFcurator import pdbcleanchainstandardizationutils as chainstd
+from CIFcurator import cifcuratorchainstandardizationutils as chainstd
 
 ########################
 # READ INPUT ARGUMENTS #
