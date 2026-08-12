@@ -10,7 +10,7 @@
 
 from __future__ import print_function
 import sys, glob
-from CIFcurator import pdbcleanmolidcifutils as molidutils
+from CIFcurator import cifcuratormolidcifutils as molidutils
 
 
 ########################
