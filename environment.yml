@@ -9,6 +9,7 @@ dependencies:
   - cython=0.29.30
   - jupyter=1.0.0
   - matplotlib=3.5.2
+  - matplotlib-inline=0.1.3
   - mmseqs2=14.7e284
   - muscle=5.1
   - numpy=1.23.1
