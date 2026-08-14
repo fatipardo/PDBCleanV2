@@ -258,8 +258,8 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
 
         with open("residue_warning_structures.csv", "w") as f:
             f.write("structure:chain\n")
-            for structure in big_structures_warning:
-                for chain in big_structures_warning[structure]:
+            for structure in sorted(big_structures_warning):
+                for chain in sorted(set(big_structures_warning[structure])):
                     f.write(f"{structure}:{chain}\n")
                     
     return Structure_Sequences_Aligned, Structure_ConversionTemplate, chid_list, check
