@@ -169,7 +169,6 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
 
                 this_chainsseq_aligned_list_map, this_chainseq_gap_percentages = AlignSequences_v4(this_chainsseq_list, chid,
                                                                     this_chainsseq_list_ids)  # FAPA JULY2024
-                i = 0
                 for I in range(len(structid_list)):
                     key = str(structid_list[I]) + "_" + chid
 
@@ -177,29 +176,6 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
 
                         Structure_Sequences_Aligned[key] = this_chainsseq_aligned_list_map[str(structid_list[I])]
                         Structure_Sequences_GAPS[key] = this_chainseq_gap_percentages #FAPA
-                        i += 1
-
-            #THIS IS THE VERSION THAT WORKS, COMMENTED SO WE TRY SOMETHING NEW
-            #for I in range(len(structid_list)):
-            #    conversion_template = {}
-            #    for chain in ChID_ResiNum_Vector[I]:
-            #        resinum_aligned_list = []
-            #        key = str(structid_list[I]) + "_" + str(chain)
-            #        if key in Structure_Sequences_Aligned:
-            #            seq = Structure_Sequences_Aligned[key]
-            #            i = 0
-            #            for resn in seq:
-            #                i += 1
-            #                if (resn != "-"):
-            #                    resinum_aligned_list.append(i)
-            #            i = 0
-            #            for residue in ChID_ResiNum_Vector[I][chain]:
-            #                key2 = chain + "_" + str(residue)
-            #                conversion_template[key2] = resinum_aligned_list[i]
-            #                i += 1
-            #    Structure_ConversionTemplate[structid_list[I]] = conversion_template
-
-            # MY TEST STARTS HERE, WITH VARIATIONS OF THE CODE ABOVE
 
             for I in range(len(structid_list)):
                 conversion_template = {}
@@ -210,7 +186,6 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                     if key in Structure_Sequences_Aligned:
                         seq = Structure_Sequences_Aligned[key]
                         gaps = Structure_Sequences_GAPS[key]
-                        i = 0
                         counter=1
                         new_res_num=[]
                         gap_tracker=0
@@ -233,18 +208,14 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                         for resn in seq:
                             if (resn != "-"):
                                 resinum_aligned_list.append(new_res_num[i])
-                            i += 1
 
 
                         for residue in range(len(resinum_aligned_list)):
 
                             key2 = chain + "_" + str(ChID_ResiNum_Vector[I][chain][residue])
                             conversion_template[key2] = resinum_aligned_list[residue]
-                            i += 1
 
                 Structure_ConversionTemplate[structid_list[I]] = conversion_template
-
-
 
 
             check = "1"
