@@ -1,8 +1,8 @@
 from __future__ import print_function
 from __future__ import division
 from Bio.PDB.MMCIFParser import FastMMCIFParser
-from PDBClean.alignmentutils import *
-from PDBClean.listutils import *
+from CIFcurator.alignmentutils import *
+from CIFcurator.listutils import *
 import string
 
 #
