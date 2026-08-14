@@ -1,8 +1,10 @@
 from __future__ import print_function
 from __future__ import division
 from Bio.PDB.MMCIFParser import FastMMCIFParser
-from CIFcurator.alignmentutils import *
-from CIFcurator.listutils import *
+from PDBClean.alignmentutils import *
+from PDBClean.listutils import *
+import string
+
 #
 
 ####################
@@ -104,9 +106,36 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
     check : str
         Updated string representing the state of the main menu, set to '1' to indicate a state change.
     """
+
+    def get_gap_letter(n):
+        """
+            Convert a 0-based index into a spreadsheet-style alphanumeric label.
+
+            Cycles through all single uppercase letters (A-Z), lowercase letters (a-z), and digits (0-9)
+            before moving into multi-letter combinations (AA, AB, ..., 99, AAA...).
+
+            Parameters:
+                n (int): The 0-based index to convert.
+
+            Returns:
+                str: The corresponding label.
+            """
+        alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits
+        base = len(alphabet)
+
+        label = ""
+        n += 1
+        while n > 0:
+            n, remainder = divmod(n - 1, base)
+            label = alphabet[remainder] + label
+
+        return label
+
     Structure_Sequences_Aligned = {}
     Structure_ConversionTemplate = {}
     Structure_Sequences_GAPS = {}
+    big_structures_warning = {}
+
     input_submenu = ""
     while(input_submenu != "QUIT"):
         print("    Perform multiple alignments to identify residues",
@@ -132,21 +161,20 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
             for chid in chid_list:
                 this_chainsseq_list = []
                 this_chainsseq_list_ids = [] #FAPA
-                this_chainsseq_aligned_list = []
                 for I in range(len(structid_list)):
                     key = str(structid_list[I]) + "_" + chid
                     if key in Structure_Sequences:
                         this_chainsseq_list.append(Structure_Sequences[key])
                         this_chainsseq_list_ids.append(structid_list[I]) # FAPA
-                #this_chainsseq_aligned_list_map = AlignSequences_v2(this_chainsseq_list, chid,this_chainsseq_list_ids )
-                #this_chainsseq_aligned_list_map = AlignSequences_v3(this_chainsseq_list, chid, this_chainsseq_list_ids) #FAPA MAY2024
+
                 this_chainsseq_aligned_list_map, this_chainseq_gap_percentages = AlignSequences_v4(this_chainsseq_list, chid,
                                                                     this_chainsseq_list_ids)  # FAPA JULY2024
                 i = 0
                 for I in range(len(structid_list)):
                     key = str(structid_list[I]) + "_" + chid
+
                     if key in Structure_Sequences:
-                        #Structure_Sequences_Aligned[key] = this_chainsseq_aligned_list[i]
+
                         Structure_Sequences_Aligned[key] = this_chainsseq_aligned_list_map[str(structid_list[I])]
                         Structure_Sequences_GAPS[key] = this_chainseq_gap_percentages #FAPA
                         i += 1
@@ -176,9 +204,7 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
             for I in range(len(structid_list)):
                 conversion_template = {}
                 for chain in ChID_ResiNum_Vector[I]:
-                    #print(ChID_ResiNum_Vector[I])
-                    #residue_numbers_users = [residue.get_id()[1] for residue in chain.get_residues()]
-                    #print(residue_numbers_users)
+
                     resinum_aligned_list = []
                     key = str(structid_list[I]) + "_" + str(chain)
                     if key in Structure_Sequences_Aligned:
@@ -187,77 +213,34 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
                         i = 0
                         counter=1
                         new_res_num=[]
-                        freq_tracker=1
                         gap_tracker=0
-                        gap_letter=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-                        for freq in gaps:
-                            #freq_tracker = 1
-                            #gap_tracker = 0
-                            #print(freq)
-                            if freq < 100-user_gap: # accepted gap percentage based on user defined occupancy threshold
+                        for freq in gaps: # accepted gap percentage based on user defined occupancy threshold
+
+                            if freq < 100-user_gap:
                                 new_res_num.append(counter)
                                 counter += 1
-                                freq_tracker=freq
                                 gap_tracker=0
-                                #print("hello")
-                            else:
-                                #print(gap_tracker)
-                                #new_res_num.append(str(counter)+"_"+str(gap_tracker))
-                                new_res_num.append(str(counter-1) +" "+str(gap_letter[gap_tracker]))
-                                gap_tracker+=1
-                                freq_tracker=freq
 
-                        #print(new_res_num)
-                        #print(len(new_res_num))
-                        #print(len(seq))
+                            else:
+                                new_res_num.append(str(counter-1) +" "+str(get_gap_letter(gap_tracker)))
+
+                                if gap_tracker == 62:
+                                    structure = (structid_list[I].split("/")[-1])
+                                    big_structures_warning.setdefault(structure, []).append(chain)
+                                gap_tracker+=1
 
 
                         for resn in seq:
-                            #print(new_res_num[i])
                             if (resn != "-"):
                                 resinum_aligned_list.append(new_res_num[i])
                             i += 1
 
-                        #print("resinum_aligned_list")
-                        #print(len(resinum_aligned_list))
-                        #print(resinum_aligned_list)
-
-                        #i = 0
-
-                        #print("THIS IS THE CHAIN NUMBER TEST")
-                        #print(ChID_ResiNum_Vector[I][chain]) #FAPA
 
                         for residue in range(len(resinum_aligned_list)):
-                            #i +=1
-                            #print("this is the value of i:", i)
-                            #print("this is resimnum_aligned_list[i]:", resinum_aligned_list[residue] )
-                            #print("this is the value of residue:", residue)
-                            #print("this is what is in the structure:",ChID_ResiNum_Vector[I][chain][residue])
 
                             key2 = chain + "_" + str(ChID_ResiNum_Vector[I][chain][residue])
-                            #print("key 2 is:",key2)
-                                #print(key2) #FAPA
-                                #print(resinum_aligned_list[i]) #FAPA
                             conversion_template[key2] = resinum_aligned_list[residue]
                             i += 1
-                        #print(conversion_template)
-
-
-
-                        #for residue in ChID_ResiNum_Vector[I][chain]:
-                        #    #i +=1
-                        #    print("this is the value of i:", i)
-                        #    print("this is resimnum_aligned_list[i]:", resinum_aligned_list[i] )
-                        #    print("this is the value of residue:", residue)
-                        #    if i == len(resinum_aligned_list)-1:
-                        #        break
-                        #    elif resinum_aligned_list[i] in ChID_ResiNum_Vector[I][chain]:
-                        #        key2 = chain + "_" + str(residue)
-                        #        #print(key2) #FAPA
-                        #        #print(resinum_aligned_list[i]) #FAPA
-                        #        conversion_template[key2] = resinum_aligned_list[i]
-                        #    i += 1
-                        #print(conversion_template)
 
                 Structure_ConversionTemplate[structid_list[I]] = conversion_template
 
@@ -266,6 +249,19 @@ def perform_multiple_alignment(Structure_Sequences, ChID_ResiNum_Vector, structi
 
             check = "1"
             input_submenu = "QUIT"
+
+    if len(big_structures_warning) > 0:
+        print(f"\nWARNING: Some structures were affected by large gaps in most of the MSA (>62 positions), "
+              f"resulting in residue renumbering that requires two-character alternate identifiers. This may lead "
+              f"to problems when opening the structure with molecular visualization software. These structures "
+              f"will be saved in residue_warning_structures.csv in the format 'structure:chain'\n")
+
+        with open("residue_warning_structures.csv", "w") as f:
+            f.write("structure:chain\n")
+            for structure in big_structures_warning:
+                for chain in big_structures_warning[structure]:
+                    f.write(f"{structure}:{chain}\n")
+                    
     return Structure_Sequences_Aligned, Structure_ConversionTemplate, chid_list, check
 
 def show_conversiontemplate(Structure_ConversionTemplate):
