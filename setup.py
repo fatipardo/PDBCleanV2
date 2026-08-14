@@ -34,7 +34,7 @@ metadata = {
     'url': 'https://github.com/fatipardo/CIFcurator',
     'download_url': 'https://github.com/fatipardo/CIFcurator',
     'platforms': ['Linux', 'OSX'],
-    'description': "PDB curation tools",
+    'description': "CIF curation tools",
     'long_description': """CIFcurator offers curation tools for structural ensemble deposited in the Protein Data Bank."""}
 
 # ------------------------------------------------------------------------------
