@@ -19,7 +19,7 @@ import numpy
 # HEADER
 #
 
-VERSION      = "0"
+VERSION      = "1.0.0"
 ISRELEASED   = False
 DISABLE_CUDA = True
 __author__   = "Levitt Lab, Stanford"
