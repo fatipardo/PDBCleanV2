@@ -1,0 +1,25 @@
+This is how to create the website from a similar directory structure:
+
+python3 build_html.py <CSV> <STRUCTURES_DIR>
+
+
+The CSV is generated as an output of running the "Analysis.SummaryPDBDataset.ipynb" jupyter Notebook. 
+The STRUCTURE_DIR contains the structures the user wants to visualize, it could be the one created after
+MOL_ID, Chain_ID, or Residue_ID steps.
+
+After running the "build_html.py", an index.html will be created. To be able to load the structures, 
+users need to start a server in their local machine, and then open the site on their browser. 
+
+To start the server, type in a terminal:
+
+python3 -m http.server 8080
+
+Then in a browser open: 
+
+http://localhost:8080/
+
+
+To stop hosting, in the terminal where the server was started, press ctrl+C 
+
+
+
